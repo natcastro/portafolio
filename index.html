@@ -316,7 +316,7 @@
   .viewer__tools { display: flex; gap: 8px; flex-wrap: wrap; }
   .viewer__stage {
     background: var(--ink); border-radius: 6px; padding: 22px;
-    height: calc(100vh - var(--nav-h) - 160px); min-height: 520px;
+    height: calc(100vh - var(--nav-h) - 160px + var(--extra, 0px)); min-height: calc(520px + var(--extra, 0px));
     display: flex; justify-content: center; align-items: stretch;
   }
   .frame {
@@ -398,7 +398,7 @@
     .nav__link { padding: 9px 12px; letter-spacing: .1em; }
     .panel__preview { display: none; }
     .hero { min-height: 70vh; }
-    .viewer__stage { height: 72vh; min-height: 420px; padding: 12px; }
+    .viewer__stage { height: calc(72vh + var(--extra, 0px)); min-height: calc(420px + var(--extra, 0px)); padding: 12px; }
     .title__script text { font-size: 250px; }
   }
 
@@ -531,7 +531,7 @@
    - live:    true → shows the live site inside the card (if it allows iframes)
    ============================================================ */
 const projects = [
-  { title: "Harmony", tag: "UX Design class · Roommate app", year: "2026", url: "https://harmony-jade-kappa.vercel.app", image: "", live: true, mode: "mobile",
+  { title: "Harmony", tag: "UX Design class · Roommate app", year: "2026", url: "https://harmony-jade-kappa.vercel.app", image: "", live: true, mode: "mobile", stageExtra: "189px",
     color: "#6C4BD1", colorDark: "#4326A6",
     preview: "assets/previews/harmony.png",
     badge: "Demo", note: "This is a demo version of the app.",
@@ -730,6 +730,7 @@ function openViewer(i, pushHash = true) {
   } else {
     vBody.innerHTML = `<div class="frame__empty" style="--grad:${p.tone}"><strong>${p.title}</strong><span>${p.live ? "Live preview goes here. Add this project's link in the projects list." : "Add a screenshot or link for this project."}</span></div>`;
   }
+  document.querySelector(".viewer__stage").style.setProperty("--extra", p.stageExtra || "0px");
   setMode(p.mode || "desktop");
   homeParts().forEach(el => el.hidden = true);
   viewer.hidden = false;
