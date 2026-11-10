@@ -501,19 +501,19 @@
         <div class="about__label">About me</div>
         <h1 id="aboutTitle">Natalie<br>Castro</h1>
         <div class="about__tag">Design with intention</div>
-        <p class="about__lead">Technology should feel easy. I care about solutions that work and about the moment a person uses them: no stress, no overthinking, just a clear and calm path.</p>
-        <p>I put myself in the user's shoes before I design anything. Understanding people is the skill I bring everywhere I go.</p>
+        <p class="about__lead">I'm an information systems and user experience designer who cares about making technology feel easy: nice to look at, calm to use, with no stress and no overthinking.</p>
+        <p>I'm creative and I think out of the box. I put myself in the user's shoes before I design anything, and I bring leadership experience with people at the center.</p>
 
         <div class="about__cols">
           <div><h3>Empathy first</h3><p>I start with what the person feels and needs, then design around it.</p></div>
           <div><h3>Effortless by design</h3><p>Fewer steps, fewer decisions, less to figure out.</p></div>
-          <div><h3>Clear for everyone</h3><p>Readable, well organized and accessible from the start.</p></div>
+          <div><h3>Calm and beautiful</h3><p>Interfaces that are pleasing to look at and feel calm to use.</p></div>
         </div>
 
         <div class="about__block">
           <h2>Background</h2>
           <ul class="about__edu">
-            <li><strong>Master's degree</strong><span>Focus on User Experience Design, agentic AI and leadership. Graduating December 2027.</span></li>
+            <li><strong>Master's in Information Systems</strong><span>Focus on technical product design and management, and agentic leadership. Graduating December 2027.</span></li>
             <li><strong>Bachelor's in Information Systems</strong><span>Where I learned how people, technology and business connect.</span></li>
           </ul>
         </div>
@@ -521,12 +521,13 @@
         <div class="about__block">
           <h2>What I focus on</h2>
           <div class="about__chips">
+            <span>Technical product design</span><span>Product management</span><span>Agentic leadership</span>
             <span>Interaction design</span><span>Visual design</span><span>Information architecture</span>
             <span>Prototyping</span><span>User-centered design</span><span>Accessibility</span><span>Presenting ideas</span>
           </div>
         </div>
 
-        <div class="about__open"><i></i>Open to UX design internships · Summer 2027</div>
+        <div class="about__open"><i></i>Open to UX and product design internships · Summer 2027</div>
 
         <div class="about__actions">
           <a class="btn btn--solid" href="https://www.linkedin.com/in/natalie-castro-barona/" target="_blank" rel="noopener">Connect on LinkedIn ↗</a>
@@ -638,7 +639,7 @@ const about = {
   linkedin: "https://www.linkedin.com/in/natalie-castro-barona/",
   title: "Natalie Castro",
   script: "design with intention",
-  body: "UX-focused designer who cares about making technology feel easy and calm. Master's in User Experience Design, agentic AI and leadership. Each tile is a project: open it to see the idea, the technique and the tools.",
+  body: "Information systems and UX designer who makes technology feel easy, calm and good to look at. Master's in Information Systems with a focus on technical product design and management, and agentic leadership. Each tile is a project: open it to see the idea and the tools.",
   foot: "Select a project ←"
 };
 
@@ -716,11 +717,10 @@ function render() {
       <dl>
         ${p.technique.length ? `<div><dt>Design technique</dt><dd>${chips(p.technique)}</dd></div>` : ""}
         ${p.tools.length ? `<div><dt>Tools</dt><dd>${chips(p.tools)}</dd></div>` : ""}
-        ${p.repo ? `<div><dt>Code</dt><dd><a class="repo" href="${p.repo}" target="_blank" rel="noopener">View on GitHub ↗</a></dd></div>` : ""}
+        ${p.repo && !(p.shots && p.shots.length) ? `<div><dt>Code</dt><dd><a class="repo" href="${p.repo}" target="_blank" rel="noopener">View on GitHub ↗</a></dd></div>` : ""}
       </dl>
     </div>
-    <a class="visit" href="${p.url || '#'}" target="_blank" rel="noopener" ${p.url ? "" : 'aria-disabled="true"'}>
-      <span>Visit site</span><span>↗</span></a>`;
+    ${p.url ? `<a class="visit" href="${p.url}" target="_blank" rel="noopener"><span>Visit site</span><span>↗</span></a>` : ""}`;
 }
 
 function select(i) {
