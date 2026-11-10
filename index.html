@@ -364,7 +364,7 @@
   body.is-about .panel { display: none; }
   body.is-about .shell { grid-template-columns: minmax(0, 1fr); }
   .about { display: grid; grid-template-columns: minmax(240px, 380px) minmax(0, 1fr); gap: 56px; padding: 40px 8px 24px; max-width: 1100px; margin-inline: auto; width: 100%; animation: fadeUp 360ms var(--ease-out); }
-  .about__photo { position: relative; display: block; align-self: start; }
+  .about__photo { position: sticky; top: calc(var(--nav-h) + 24px); display: block; align-self: start; }
   .about__photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 18%; border-radius: 6px; display: block; }
   .about__photo::after { content: ""; position: absolute; inset: 14px -14px -14px 14px; border: 1.5px solid var(--terra); border-radius: 6px; z-index: -1; }
   .about__label { font-size: 12px; letter-spacing: .26em; text-transform: uppercase; color: var(--terra); margin-bottom: 14px; }
@@ -377,6 +377,25 @@
   .about__actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
   .btn--solid { background: var(--ink); color: var(--white); }
   @media (hover: hover) { .btn--solid:hover { background: var(--terra); border-color: var(--terra); } }
+
+  .about__lead { font-size: 21px !important; line-height: 1.55 !important; font-weight: 500; max-width: 52ch !important; }
+  .about__block { margin: 30px 0 0; }
+  .about__block h2 { font-family: "Bebas Neue", sans-serif; font-weight: 400; font-size: 30px; letter-spacing: .06em; margin-bottom: 12px; }
+  .about__edu { list-style: none; padding: 0; display: grid; gap: 12px; }
+  .about__edu li { display: grid; gap: 2px; border-left: 3px solid var(--terra); padding: 2px 0 2px 14px; }
+  .about__edu strong { font-size: 16px; font-weight: 700; }
+  .about__edu span { font-size: 14.5px; line-height: 1.5; opacity: .8; }
+  .about__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .about__chips span { border: 1.5px solid var(--ink); border-radius: 99px; padding: 7px 14px; font-size: 13.5px; font-weight: 500; transition: background-color 160ms ease, color 160ms ease; }
+  @media (hover: hover) { .about__chips span:hover { background: var(--ink); color: var(--white); } }
+  .about__open { display: inline-flex; align-items: center; gap: 10px; margin: 28px 0 4px; padding: 10px 16px; border-radius: 99px; background: rgba(254,93,38,.12); font-size: 13.5px; font-weight: 700; }
+  .about__open i { width: 9px; height: 9px; border-radius: 50%; background: var(--terra); display: block; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(254,93,38,.5); } 50% { box-shadow: 0 0 0 7px rgba(254,93,38,0); } }
+  @media (prefers-reduced-motion: reduce) { .about__open i { animation: none; } }
+
+  .impact { list-style: none; padding: 0; display: grid; gap: 8px; }
+  .impact li { position: relative; padding-left: 18px; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,.9); }
+  .impact li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border-radius: 50%; background: var(--terra); }
 
   /* Bolder accent text for contrast */
   .panel__label { font-weight: 700; font-size: 12px; }
@@ -482,13 +501,33 @@
         <div class="about__label">About me</div>
         <h1 id="aboutTitle">Natalie<br>Castro</h1>
         <div class="about__tag">Design with intention</div>
-        <p>I design and build websites and web apps: nonprofit sites, a roommate app, a wedding website and internal tools that help teams work better.</p>
-        <p>This portfolio is a living archive. Each project shows what it is, the design technique behind it and the tools I used to make it.</p>
+        <p class="about__lead">Technology should feel easy. I care about solutions that work and about the moment a person uses them: no stress, no overthinking, just a clear and calm path.</p>
+        <p>I put myself in the user's shoes before I design anything. Understanding people is the skill I bring everywhere I go.</p>
+
         <div class="about__cols">
-          <div><h3>Web design</h3><p>Sites with a clear story, built to be easy to use.</p></div>
-          <div><h3>Product &amp; UX</h3><p>Flows and interfaces designed around real people.</p></div>
-          <div><h3>Internal tools</h3><p>Dashboards and workflows that save teams time.</p></div>
+          <div><h3>Empathy first</h3><p>I start with what the person feels and needs, then design around it.</p></div>
+          <div><h3>Effortless by design</h3><p>Fewer steps, fewer decisions, less to figure out.</p></div>
+          <div><h3>Clear for everyone</h3><p>Readable, well organized and accessible from the start.</p></div>
         </div>
+
+        <div class="about__block">
+          <h2>Background</h2>
+          <ul class="about__edu">
+            <li><strong>Master's degree</strong><span>Focus on User Experience Design, agentic AI and leadership. Graduating December 2027.</span></li>
+            <li><strong>Bachelor's in Information Systems</strong><span>Where I learned how people, technology and business connect.</span></li>
+          </ul>
+        </div>
+
+        <div class="about__block">
+          <h2>What I focus on</h2>
+          <div class="about__chips">
+            <span>Interaction design</span><span>Visual design</span><span>Information architecture</span>
+            <span>Prototyping</span><span>User-centered design</span><span>Accessibility</span><span>Presenting ideas</span>
+          </div>
+        </div>
+
+        <div class="about__open"><i></i>Open to UX design internships · Summer 2027</div>
+
         <div class="about__actions">
           <a class="btn btn--solid" href="https://www.linkedin.com/in/natalie-castro-barona/" target="_blank" rel="noopener">Connect on LinkedIn ↗</a>
           <a class="btn" href="#projects" data-nav="projects">See my projects</a>
@@ -546,8 +585,9 @@ const projects = [
       { label: "Impact dashboard", video: "assets/healingwings/demo-2.mp4", poster: "assets/healingwings/demo-2.jpg" }
     ],
     tone: "linear-gradient(135deg,#2a0f2a,#ff7ab8)",
-    summary: "A supporter and operations portal for a nonprofit that provides safe housing and services to people rebuilding their lives after crisis. Donors see their own giving and its impact, while staff manage resident care, fundraising and outreach, with private case data kept behind roles.",
-    technique: ["Privacy-first design", "Donor, Staff and Admin roles", "Impact dashboards"], tools: ["React", "TypeScript", ".NET API", "Python ML", "Azure"] },
+    summary: "A centralized website for a nonprofit that helps children rebuild their lives after trauma. It shares the organization's story, programs and impact in one place, and it sits on top of a centralized system the team uses day to day. That internal system isn't shown here for privacy, but the public site holds what donors and the community want to know.",
+    impact: ["One place for donors and the public to learn about the mission", "Impact numbers and dashboards that are easy to read", "Sensitive case data stays private, behind roles"],
+    technique: ["Centralized system", "Donor-focused content", "Privacy by design"], tools: ["React", "TypeScript", ".NET API", "Python ML", "Azure"] },
   { title: "Ella Rises", tag: "University project · Nonprofit", year: "2025", url: "", image: "", live: true,
     color: "#F0509E", colorDark: "#B02A70",
     repo: "https://github.com/maddiejones03/Intex",
@@ -558,8 +598,9 @@ const projects = [
       { label: "Donate", src: "assets/ella/donate.png" }
     ],
     tone: "linear-gradient(135deg,#3a0d0d,#FE5D26)",
-    summary: "A full web platform for Ella Rises, a nonprofit that empowers young women through STEAM education, mentorship and cultural pride. A public site shares the mission and takes donations, and an admin side manages participants, events, registrations, donations, grants, milestones and surveys.",
-    technique: ["Nonprofit storytelling", "Admin dashboard", "Role-based access"], tools: ["Node.js", "Express", "EJS", "PostgreSQL"] },
+    summary: "A website and centralized system for Ella Rises, a foundation that inspires and motivates girls to keep pursuing their education. We chose colors, photos and tone to communicate that mission, so visitors feel it right away. Behind the public pages, the team manages participants, events, donations, grants and surveys in one system.",
+    impact: ["Design choices (color, imagery, language) built around the mission", "Public pages for families and donors, one system for the team"],
+    technique: ["Mission-driven design", "Centralized system", "Admin dashboard"], tools: ["Node.js", "Express", "EJS", "PostgreSQL"] },
   { title: "DOMOsapiens", tag: "Anglepoint · ROI extraction platform", year: "2026", url: "", image: "", live: false,
     color: "#0B2E7A", colorDark: "#051A4A",
     repo: "https://github.com/nataliecastro1/DOMOsapiens",
@@ -572,7 +613,7 @@ const projects = [
     tone: "linear-gradient(135deg,#1b1b1b,#8a8a8a)",
     summary: "A platform built for Anglepoint that turns design-heavy ROAR slide decks into clean, structured ROI records. AI proposes the numbers, an expert confirms them, and every edit is saved in an audit trail. Our pipeline and flow design won the project.",
     technique: ["Pipeline and flow design", "Human-in-the-loop AI", "Audit trail", "Dashboards"], tools: ["React", "Vite", "FastAPI", "Claude API", "Recharts"] },
-  { title: "FTC Hub", tag: "Forma Tu Cuerpo · Productivity system", year: "2026", url: "", image: "", live: false,
+  { title: "FTC Hub", tag: "Forma Tu Cuerpo · UX improvement", year: "2026", url: "", image: "", live: false,
     color: "#2E8B57", colorDark: "#1B5C38",
     tone: "linear-gradient(135deg,#2b2118,#c9b9ab)",
     shots: [
@@ -580,14 +621,16 @@ const projects = [
       { label: "Briefs",    src: "assets/ftc/briefs.webp" },
       { label: "Dashboard", src: "assets/ftc/dashboard.webp" }
     ],
-    summary: "An internal productivity hub I built for Forma Tu Cuerpo. Each team gets its own workspace: tasks, a brief workflow between marketing and design with statuses, deadlines and on-time alerts, and a dashboard that tracks average delivery time per designer.",
-    technique: ["Internal tool", "Workflow design", "Dashboard design"], tools: ["React", "TypeScript", "Vite", "Vercel"] },
-  { title: "Wedding Website", tag: "Personal · Website", year: "2026", url: "https://mellow-speculoos-4ba28d.netlify.app/", image: "", live: true,
+    summary: "A UX improvement for Forma Tu Cuerpo's internal team. The previous page didn't work well, so we rebuilt the experience around the people using it: email integration so every notification reaches them, a rewarding animation that motivates and compliments them, and a dashboard with their personal performance and leader feedback. Still improving, and users find it very intuitive.",
+    impact: ["Delivery time went from 5–6 days to 1–2 days", "Notifications now arrive by email", "Leaders get a clearer view to give better feedback", "Users say it is very intuitive and they like it"],
+    technique: ["UX redesign", "Workflow design", "Dashboard design", "Motivating feedback"], tools: [] },
+  { title: "Wedding Website", tag: "Personal · Early project", year: "2026", url: "https://mellow-speculoos-4ba28d.netlify.app/", image: "", live: true,
     color: "#FE5D26", colorDark: "#C23F0E",
     preview: "assets/previews/wedding.png",
     tone: "linear-gradient(135deg,#3a2a1a,#d9c3a5)",
-    summary: "The website I designed for my own wedding.",
-    technique: [], tools: [] },
+    summary: "One of my first projects: the website for my own wedding. It works 100%. The RSVP form is connected to a database and to my email, so every time a guest answered I knew right away who was coming and who wasn't.",
+    impact: ["RSVP form linked to a database and my email", "Instant answer from every guest, no chasing"],
+    technique: ["RSVP flow", "Database and email integration"], tools: [] },
 ];
 
 const about = {
@@ -595,7 +638,7 @@ const about = {
   linkedin: "https://www.linkedin.com/in/natalie-castro-barona/",
   title: "Natalie Castro",
   script: "design with intention",
-  body: "Designer and web creator. This is a living archive of the sites I've designed. Each tile is a project: click it to see the idea, the design technique and the tools behind it.",
+  body: "UX-focused designer who cares about making technology feel easy and calm. Master's in User Experience Design, agentic AI and leadership. Each tile is a project: open it to see the idea, the technique and the tools.",
   foot: "Select a project ←"
 };
 
@@ -669,6 +712,7 @@ function render() {
       <h2 class="panel__title">${p.title}</h2>
       <div class="panel__preview">${media}</div>
       <p>${p.summary}</p>
+      ${p.impact && p.impact.length ? `<ul class="impact">${p.impact.map(x => `<li>${x}</li>`).join("")}</ul>` : ""}
       <dl>
         ${p.technique.length ? `<div><dt>Design technique</dt><dd>${chips(p.technique)}</dd></div>` : ""}
         ${p.tools.length ? `<div><dt>Tools</dt><dd>${chips(p.tools)}</dd></div>` : ""}
