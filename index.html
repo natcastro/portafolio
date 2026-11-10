@@ -397,6 +397,12 @@
   .impact li { position: relative; padding-left: 18px; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,.9); }
   .impact li::before { content: ""; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; border-radius: 50%; background: var(--terra); }
 
+  .about__list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 28px; }
+  .about__list li { position: relative; padding-left: 20px; font-size: 15px; line-height: 1.4; }
+  .about__list li::before { content: ""; position: absolute; left: 0; top: .5em; width: 7px; height: 7px; border-radius: 50%; background: var(--terra); }
+  .about p.about__open { display: flex; align-items: center; gap: 10px; margin: 28px 0 4px; padding: 0; background: none; font-size: 15px; font-weight: 700; max-width: none; }
+  @media (max-width: 600px) { .about__list { grid-template-columns: 1fr; } }
+
   /* Bolder accent text for contrast */
   .panel__label { font-weight: 700; font-size: 12px; }
   .panel__script { font-weight: 800; font-size: 14px; letter-spacing: .2em; }
@@ -411,7 +417,7 @@
     .panel[data-state="about"] { display: none; }
     .about { grid-template-columns: 1fr; gap: 36px; padding-top: 20px; }
     .about__cols { grid-template-columns: 1fr; }
-    .about__photo { max-width: 320px; }
+    .about__photo { position: relative; top: auto; max-width: 300px; }
     .nav__inner { padding-inline: 14px; }
     .nav__brand span { display: none; }
     .nav__link { padding: 9px 12px; letter-spacing: .1em; }
@@ -501,33 +507,41 @@
         <div class="about__label">About me</div>
         <h1 id="aboutTitle">Natalie<br>Castro</h1>
         <div class="about__tag">Design with intention</div>
-        <p class="about__lead">I'm an information systems and user experience designer who cares about making technology feel easy: nice to look at, calm to use, with no stress and no overthinking.</p>
-        <p>I'm creative and I think out of the box. I put myself in the user's shoes before I design anything, and I bring leadership experience with people at the center.</p>
+        <p class="about__lead">I'm an Information Systems grad, and one of my focuses is technical product design. I'm passionate about making technology that feels easy, is nice to look at and is calm to use, with no stress and no overthinking.</p>
+        <p>Life is hard enough. I believe the tools we create should make people's lives more doable and easier to handle. I'm creative, and I like to think out of the box.</p>
 
         <div class="about__cols">
-          <div><h3>Empathy first</h3><p>I start with what the person feels and needs, then design around it.</p></div>
-          <div><h3>Effortless by design</h3><p>Fewer steps, fewer decisions, less to figure out.</p></div>
-          <div><h3>Calm and beautiful</h3><p>Interfaces that are pleasing to look at and feel calm to use.</p></div>
+          <div><h3>Empathy first</h3><p>Information systems is the perfect mix of who I am: people, business and technology. I think about what people really need, and I don't build products they will never use.</p></div>
+          <div><h3>Hard made simple</h3><p>Some things need many steps. My work is to turn what is difficult into something simple to follow.</p></div>
+          <div><h3>Calm and beautiful</h3><p>I understand the infrastructure and the technology behind a product. That lets me create things that are beautiful and nice to use.</p></div>
         </div>
 
         <div class="about__block">
           <h2>Background</h2>
           <ul class="about__edu">
-            <li><strong>Master's in Information Systems</strong><span>Focus on technical product design and management, and agentic leadership. Graduating December 2027.</span></li>
-            <li><strong>Bachelor's in Information Systems</strong><span>Where I learned how people, technology and business connect.</span></li>
+            <li><strong>Bachelor's in Information Systems</strong><span>Graduated, with a focus on leadership, agentic AI, and product and product design management.</span></li>
+            <li><strong>Master's in Information Systems</strong><span>Focus on technical product design and management, agentic AI and leadership. Graduating December 2027.</span></li>
           </ul>
         </div>
 
         <div class="about__block">
           <h2>What I focus on</h2>
-          <div class="about__chips">
-            <span>Technical product design</span><span>Product management</span><span>Agentic leadership</span>
-            <span>Interaction design</span><span>Visual design</span><span>Information architecture</span>
-            <span>Prototyping</span><span>User-centered design</span><span>Accessibility</span><span>Presenting ideas</span>
-          </div>
+          <ul class="about__list">
+            <li>Technical product design</li>
+            <li>Product and product design management</li>
+            <li>Agentic AI</li>
+            <li>Leadership</li>
+            <li>Interaction design</li>
+            <li>Visual design</li>
+            <li>Information architecture</li>
+            <li>Prototyping</li>
+            <li>User-centered design</li>
+            <li>Accessibility</li>
+            <li>Presenting ideas</li>
+          </ul>
         </div>
 
-        <div class="about__open"><i></i>Open to UX and product design internships · Summer 2027</div>
+        <p class="about__open"><i></i>Open to UX and product design internships · Summer 2027</p>
 
         <div class="about__actions">
           <a class="btn btn--solid" href="https://www.linkedin.com/in/natalie-castro-barona/" target="_blank" rel="noopener">Connect on LinkedIn ↗</a>
@@ -639,7 +653,7 @@ const about = {
   linkedin: "https://www.linkedin.com/in/natalie-castro-barona/",
   title: "Natalie Castro",
   script: "design with intention",
-  body: "Information systems and UX designer who makes technology feel easy, calm and good to look at. Master's in Information Systems with a focus on technical product design and management, and agentic leadership. Each tile is a project: open it to see the idea and the tools.",
+  body: "Information Systems grad passionate about making technology feel easy, nice to look at and calm to use. One of my focuses is technical product design. Each tile is a project: open it to see the idea and the tools.",
   foot: "Select a project ←"
 };
 
