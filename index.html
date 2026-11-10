@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Natalie Castro — Portfolio</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="icon" type="image/png" sizes="512x512" href="assets/favicon-512.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="description" content="Web design portfolio by Natalie Castro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Hurricane&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Drop your licensed font at assets/fonts/BrittanySignature.woff2 (or .otf/.ttf) and it takes over automatically. */
+  @font-face {
+    font-family: "Brittany Signature";
+    src: url("assets/fonts/BrittanySignature.woff2") format("woff2"),
+         url("assets/fonts/BrittanySignature.otf") format("opentype"),
+         url("assets/fonts/BrittanySignature.ttf") format("truetype");
+    font-display: swap;
+  }
+  :root {
+    --sand: #fff;
+    --sand-deep: #fff;
+    --paper: #fff;
+    --ink: #0b0b0b;
+    --red: #fff;
+    --terra: #FE5D26;   /* tangerine accent */ 
+    --hero: #050505;   /* hero background */
+    --nav-h: 68px;
+    --white: #fff;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --panel-w: 360px;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--sand);
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  :focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+  /* ───────── Layout: content left, sticky panel right ───────── */
+  .shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--panel-w);
+    gap: 20px;
+    padding: 20px;
+    max-width: 1680px;
+    margin-inline: auto;
+  }
+  .main { min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+
+  /* ───────── Hero ───────── */
+  .hero {
+    position: relative;
+    min-height: min(78vh, 720px);
+    background: var(--hero);
+    border-radius: 6px;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    isolation: isolate;
+  }
+  .hero__bg { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; object-position: center 45%; opacity: .9; filter: grayscale(1); }
+  .hero__bg-fallback { position: absolute; inset: 0; z-index: -2; }
+  .hero__dots { position: absolute; top: 28px; right: 28px; display: flex; gap: 10px; }
+  .hero__dots i { width: 22px; height: 22px; border-radius: 50%; background: #fff; display: block; }
+
+  .title { position: relative; text-align: center; padding: 0 16px; }
+  .title__script {
+    display: block;
+    width: min(88%, 760px);
+    height: auto;
+    margin: 0 auto -8%;
+    position: relative;
+    z-index: 2;
+    overflow: visible;
+  }
+  .title__script text {
+    font-family: "Brittany Signature", "Hurricane", cursive;
+    font-size: 270px;
+    fill: transparent;
+    stroke: var(--terra);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 2600;
+    stroke-dashoffset: 2600;
+    animation:
+      write 2.6s .35s var(--ease-in-out) forwards,
+      fillin .7s 2.5s var(--ease-out) forwards;
+  }
+  @keyframes write  { to { stroke-dashoffset: 0; } }
+  @keyframes fillin { to { fill: var(--terra); stroke-width: 4.5; } }
+
+  .title__big {
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-size: clamp(88px, 15vw, 230px);
+    line-height: .86;
+    letter-spacing: .01em;
+    color: var(--white);
+    position: relative; z-index: 1;
+    display: flex; justify-content: center;
+  }
+  .title__big span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(24px);
+    animation: rise .7s var(--ease-out) forwards;
+    animation-delay: calc(var(--i) * 45ms + 200ms);
+  }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  .badge {
+    display: inline-block;
+    margin-top: 26px;
+    padding: 14px 54px;
+    background: var(--paper);
+    border-radius: 4px;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 26px;
+    letter-spacing: .32em;
+    padding-left: calc(54px + .32em);
+    opacity: 0;
+    animation: rise .7s 1.1s var(--ease-out) forwards;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.9) inset;
+  }
+  .hero__scroll {
+    position: absolute; bottom: 22px; left: 50%; translate: -50% 0;
+    color: #fff; opacity: .7; font-size: 12px; letter-spacing: .24em; text-transform: uppercase;
+    transition: opacity 160ms ease;
+  }
+  .hero__scroll:hover { opacity: 1; }
+
+  /* ───────── Projects section ───────── */
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 4px 0; }
+  .section-head h2 { font-family: "Bebas Neue", sans-serif; font-size: 44px; letter-spacing: .04em; font-weight: 400; }
+  .section-head p { font-size: 13px; opacity: .7; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    text-align: left;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 6px;
+    padding: 10px 10px 14px;
+    display: flex; flex-direction: column; gap: 14px;
+    transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out), background-color 160ms ease;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: rise .6s var(--ease-out) forwards;
+    animation-delay: calc(var(--i) * 60ms + 150ms);
+  }
+  @media (hover: hover) {
+    .card:not([aria-pressed="true"]):not(.card--soon):hover { transform: translateY(-4px); background: var(--c); border-color: var(--cd); color: #fff; box-shadow: 6px 6px 0 var(--cd); }
+  }
+  .card { transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out), background-color 220ms ease, border-color 220ms ease, color 220ms ease; }
+  .card:active { transform: scale(.97); transition-duration: 120ms; }
+  .card[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+
+  .thumb {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--tone, #222);
+  }
+  .thumb__bar { position: absolute; top: 0; left: 0; right: 0; height: 22px; background: rgba(255,255,255,.9); display: flex; align-items: center; gap: 5px; padding-inline: 8px; z-index: 2; }
+  .thumb__bar i { width: 7px; height: 7px; border-radius: 50%; background: #0b0b0b; opacity: .35; }
+  .thumb img, .thumb iframe { position: absolute; inset: 22px 0 0 0; width: 100%; height: calc(100% - 22px); object-fit: cover; border: 0; pointer-events: none; }
+  .thumb__badge { position: absolute; left: 10px; bottom: 10px; z-index: 3; background: var(--terra); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; padding: 5px 11px; border-radius: 99px; }
+  .thumb__ph {
+    position: absolute; inset: 22px 0 0 0; display: grid; place-items: center;
+    font-family: "Bebas Neue", sans-serif; font-size: 54px; color: rgba(255,255,255,.9); letter-spacing: .04em;
+    background: var(--grad);
+  }
+  .thumb__ph small { position: absolute; bottom: 8px; right: 10px; font: 500 10px/1 "Inter"; letter-spacing: .18em; text-transform: uppercase; opacity: .7; }
+
+  .card__meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-inline: 4px; }
+  .card__title { font-family: "Bebas Neue", sans-serif; font-size: 28px; letter-spacing: .04em; line-height: 1; }
+  .card__tag { font-size: 12px; opacity: .65; margin-top: 4px; }
+  .card__arrow {
+    width: 34px; height: 34px; border-radius: 50%; border: 1px solid currentColor; display: grid; place-items: center; flex: none;
+    transition: transform 200ms var(--ease-out), background-color 160ms ease, color 160ms ease;
+  }
+  @media (hover: hover) { .card:not(.card--soon):hover .card__arrow { transform: rotate(-45deg); background: #fff; border-color: #fff; color: var(--c); }
+  .card[aria-pressed="true"] .card__arrow { border-color: var(--terra); color: var(--terra); } }
+
+  .card--soon { cursor: default; background: transparent; border: 1.5px dashed var(--ink); justify-content: center; align-items: center; min-height: 240px; text-align: center; }
+  .card--soon:hover { transform: none; box-shadow: none; }
+  .card--soon span { opacity: 1 !important; }
+  .card--soon span { font-family: "Bebas Neue"; font-size: 26px; letter-spacing: .08em; opacity: .55; }
+
+  /* ───────── Sticky side panel ───────── */
+  .panel {
+    position: sticky; top: calc(var(--nav-h) + 16px);
+    height: calc(100vh - var(--nav-h) - 36px);
+    background: var(--ink); color: var(--white);
+    border-radius: 6px;
+    padding: 28px 26px;
+    display: flex; flex-direction: column; gap: 22px;
+    overflow: auto;
+    align-self: start;
+  }
+  .panel__label { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--terra); }
+  .panel__title { font-family: "Bebas Neue", sans-serif; font-size: 54px; line-height: .95; letter-spacing: .02em; font-weight: 400; }
+  .panel__script { font-family: "Brittany Signature", "Hurricane", cursive; font-size: 40px; color: var(--terra); line-height: 1; margin-top: -6px; }
+  .panel__body { display: flex; flex-direction: column; gap: 22px; animation: fadeUp 360ms var(--ease-out); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .panel p { font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,.78); }
+  .panel dl { display: grid; gap: 14px; }
+  .panel dt { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; opacity: .5; margin-bottom: 6px; }
+  .panel dd { font-size: 14px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips span { border: 1px solid rgba(254,93,38,.7); padding: 5px 11px; border-radius: 99px; font-size: 12.5px; }
+  .panel__preview { aspect-ratio: 16/10; border-radius: 4px; overflow: hidden; position: relative; background: #1b1b1b; }
+  .panel__preview .thumb__ph { inset: 0; font-size: 70px; }
+  .panel__preview img, .panel__preview iframe { width: 100%; height: 100%; object-fit: cover; border: 0; }
+  .visit {
+    margin-top: auto;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 20px; background: var(--terra); color: #fff; border-radius: 4px;
+    font-family: "Bebas Neue"; font-size: 24px; letter-spacing: .12em; text-decoration: none;
+    transition: transform 160ms var(--ease-out), filter 160ms ease;
+  }
+  .visit:active { transform: scale(.97); }
+  .visit[aria-disabled="true"] { background: #2a2a2a; color: #777; pointer-events: none; }
+  @media (hover: hover) { .visit:hover { filter: brightness(1.08); } }
+  .panel__foot { font-size: 12px; opacity: .5; }
+
+  /* Author card (about) */
+  .author { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; padding-top: 6px; }
+  .author__photo {
+    position: relative; display: block; width: 150px; height: 150px; border-radius: 50%; overflow: hidden;
+    box-shadow: 0 0 0 2px var(--ink), 0 0 0 4px var(--terra);
+    transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+  }
+  .author__photo img { filter: grayscale(1) contrast(1.05); width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); display: block; }
+  @media (hover: hover) { .author__photo:hover { transform: scale(1.04); box-shadow: 0 0 0 2px var(--ink), 0 0 0 4px var(--terra), 0 10px 30px -8px rgba(254,93,38,.5); } }
+  .author__photo:active { transform: scale(.97); transition-duration: 120ms; }
+  .author__link { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--white); opacity: .6; text-decoration: none; transition: opacity 160ms ease, color 160ms ease; }
+  .author__link:hover { opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+  .author .panel__title { font-size: 46px; }
+  .author .panel__script { margin-top: -2px; }
+  .author p { max-width: 30ch; }
+  .rule { width: 40px; height: 1px; background: rgba(255,255,255,.3); border: 0; }
+
+  /* Symmetric panel layout */
+  .panel { align-items: stretch; text-align: center; }
+  .panel__body { align-items: center; }
+  .mini { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
+  .mini .author__photo { width: 84px; height: 84px; box-shadow: 0 0 0 2px var(--ink), 0 0 0 3.5px var(--terra); }
+  .mini__name { font-family: "Bebas Neue", sans-serif; font-size: 22px; letter-spacing: .14em; }
+  .panel .chips { justify-content: center; }
+  .panel dl { width: 100%; }
+  .panel p { max-width: 34ch; margin-inline: auto; }
+  .panel__preview { width: 100%; }
+  .author .panel__title { font-size: 46px; }
+  .author__photo { box-shadow: 0 0 0 2px var(--ink), 0 0 0 4px var(--terra); }
+
+  /* Left-aligned panel, full-width rectangular color photo */
+  .panel { text-align: left; align-items: stretch; }
+  .panel__body { align-items: stretch; }
+  .panel p { max-width: none; margin-inline: 0; }
+  .panel .chips { justify-content: flex-start; }
+  .rule { width: 100%; background: rgba(255,255,255,.14); }
+  .author { align-items: stretch; text-align: left; padding-top: 0; }
+  .author .author__photo { width: 100%; height: auto; aspect-ratio: 1 / 1; border-radius: 6px; box-shadow: none; }
+  .author .author__photo img { filter: none; transform: none; object-position: center 20%; }
+  .author .author__photo:hover { box-shadow: 0 0 0 2px var(--terra); }
+  .author .panel__title { font-size: 52px; }
+  .mini { flex-direction: row; align-items: center; gap: 16px; text-align: left; }
+  .mini .author__photo { width: 92px; height: 116px; flex: none; border-radius: 4px; box-shadow: none; }
+  .mini .author__photo img { filter: none; transform: none; object-position: center 15%; }
+  .mini .author__photo:hover { box-shadow: 0 0 0 2px var(--terra); }
+  .mini__text { display: flex; flex-direction: column; gap: 4px; }
+  .mini__name { font-size: 30px; letter-spacing: .06em; line-height: 1; }
+  .mini .panel__script { font-size: 30px; margin: 0; }
+  .mini .author__link { margin-top: 6px; }
+
+  .repo { color: var(--white); text-underline-offset: 4px; font-size: 14px; }
+  .repo:hover { color: var(--terra); }
+
+  /* Smaller photo + legible tagline */
+  .author .author__photo { width: 168px; aspect-ratio: 4 / 5; align-self: flex-start; }
+  .author .author__photo img { object-position: center 18%; }
+  .panel__script { font-family: "Inter", system-ui, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--terra); margin-top: 8px; line-height: 1.3; }
+  .mini .panel__script { font-size: 11px; margin: 0; }
+
+  [hidden] { display: none !important; }
+
+  /* ───────── Viewer (page inside a page = iframe) ───────── */
+  .viewer { display: flex; flex-direction: column; gap: 14px; animation: fadeUp 360ms var(--ease-out); }
+  .viewer__bar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1.5px solid var(--ink); border-radius: 99px;
+    font-size: 13px; font-weight: 500; text-decoration: none; background: var(--white); color: var(--ink);
+    transition: transform 160ms var(--ease-out), background-color 160ms ease, color 160ms ease;
+  }
+  .btn:active { transform: scale(.97); }
+  @media (hover: hover) { .btn:hover { background: var(--ink); color: var(--white); } }
+  .btn[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+  .viewer__title { font-family: "Bebas Neue", sans-serif; font-size: 34px; letter-spacing: .04em; line-height: 1; margin-right: auto; }
+  .viewer__tools { display: flex; gap: 8px; flex-wrap: wrap; }
+  .viewer__stage {
+    background: var(--ink); border-radius: 6px; padding: 22px;
+    height: calc(100vh - var(--nav-h) - 160px); min-height: 520px;
+    display: flex; justify-content: center; align-items: stretch;
+  }
+  .frame {
+    width: 100%; max-width: 100%; background: #fff; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;
+    transition: max-width 320ms var(--ease-in-out);
+  }
+  .frame[data-mode="mobile"] { max-width: 390px; }
+  .frame__bar { flex: none; height: 34px; background: #e9e9e9; display: flex; align-items: center; gap: 6px; padding-inline: 12px; }
+  .frame__bar i { width: 9px; height: 9px; border-radius: 50%; background: #0b0b0b; opacity: .3; }
+  .frame__url { margin-left: 10px; flex: 1; min-width: 0; background: #fff; border-radius: 99px; padding: 4px 12px; font-size: 12px; color: #555; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .frame__body { position: relative; flex: 1; min-height: 0; background: #fff; }
+  .frame__body iframe, .frame__body img { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+  .frame__body img { object-fit: cover; object-position: top; }
+  .frame__empty { position: absolute; inset: 0; display: grid; place-content: center; gap: 10px; text-align: center; padding: 24px; background: var(--grad, #111); color: #fff; }
+  .frame__empty strong { font-family: "Bebas Neue", sans-serif; font-size: 44px; font-weight: 400; letter-spacing: .05em; }
+  .frame__empty span { font-size: 13px; opacity: .8; max-width: 36ch; }
+  .viewer__tabs { display: inline-flex; gap: 8px; flex-wrap: wrap; }
+  .frame__body.is-shots { overflow-y: auto; }
+  .frame__body.is-shots img { position: static; height: auto; display: block; object-fit: initial; }
+  .frame__body video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; }
+  .viewer__hint { font-size: 12.5px; opacity: .65; }
+  body.is-viewing .panel__preview { display: none; }
+
+  /* ───────── Top menu ───────── */
+  .nav {
+    position: sticky; top: 0; z-index: 50; height: var(--nav-h);
+    background: rgba(255,255,255,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .nav__inner { height: 100%; max-width: 1680px; margin-inline: auto; padding-inline: 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .nav__brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .nav__brand img { width: 34px; height: 34px; display: block; }
+  .nav__brand span { font-family: "Bebas Neue", sans-serif; font-size: 24px; letter-spacing: .1em; line-height: 1; }
+  .nav__links { display: flex; gap: 6px; }
+  .nav__link {
+    position: relative; padding: 10px 18px; border-radius: 99px; text-decoration: none; color: var(--ink);
+    font-size: 13px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+  }
+  .nav__link:active { transform: scale(.97); }
+  @media (hover: hover) { .nav__link:hover { background: rgba(0,0,0,.07); } }
+  .nav__link[aria-current="page"] { background: var(--ink); color: var(--white); }
+
+  /* ───────── About page ───────── */
+  body.is-about .panel { display: none; }
+  body.is-about .shell { grid-template-columns: minmax(0, 1fr); }
+  .about { display: grid; grid-template-columns: minmax(240px, 380px) minmax(0, 1fr); gap: 56px; padding: 40px 8px 24px; max-width: 1100px; margin-inline: auto; width: 100%; animation: fadeUp 360ms var(--ease-out); }
+  .about__photo { position: relative; display: block; align-self: start; }
+  .about__photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 18%; border-radius: 6px; display: block; }
+  .about__photo::after { content: ""; position: absolute; inset: 14px -14px -14px 14px; border: 1.5px solid var(--terra); border-radius: 6px; z-index: -1; }
+  .about__label { font-size: 12px; letter-spacing: .26em; text-transform: uppercase; color: var(--terra); margin-bottom: 14px; }
+  .about h1 { font-family: "Bebas Neue", sans-serif; font-weight: 400; font-size: clamp(56px, 9vw, 112px); line-height: .9; letter-spacing: .01em; }
+  .about__tag { font-size: 13px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--terra); margin: 14px 0 26px; }
+  .about p { font-size: 17px; line-height: 1.7; max-width: 58ch; margin-bottom: 16px; }
+  .about__cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin: 30px 0; }
+  .about__cols h3 { font-family: "Bebas Neue", sans-serif; font-weight: 400; font-size: 26px; letter-spacing: .06em; border-top: 1.5px solid var(--ink); padding-top: 12px; margin-bottom: 6px; }
+  .about__cols p { font-size: 14.5px; line-height: 1.55; margin: 0; }
+  .about__actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+  .btn--solid { background: var(--ink); color: var(--white); }
+  @media (hover: hover) { .btn--solid:hover { background: var(--terra); border-color: var(--terra); } }
+
+  /* Bolder accent text for contrast */
+  .panel__label { font-weight: 700; font-size: 12px; }
+  .panel__script { font-weight: 800; font-size: 14px; letter-spacing: .2em; }
+  .mini .panel__script { font-weight: 800; font-size: 12.5px; }
+  .about__label { font-weight: 800; font-size: 13px; }
+  .about__tag { font-weight: 800; font-size: 16px; }
+
+  /* ───────── Responsive ───────── */
+  @media (max-width: 1000px) {
+    .shell { grid-template-columns: 1fr; padding: 12px; }
+    .panel { position: relative; top: 0; height: auto; order: -1; padding: 22px; }
+    .panel[data-state="about"] { display: none; }
+    .about { grid-template-columns: 1fr; gap: 36px; padding-top: 20px; }
+    .about__cols { grid-template-columns: 1fr; }
+    .about__photo { max-width: 320px; }
+    .nav__inner { padding-inline: 14px; }
+    .nav__brand span { display: none; }
+    .nav__link { padding: 9px 12px; letter-spacing: .1em; }
+    .panel__preview { display: none; }
+    .hero { min-height: 70vh; }
+    .viewer__stage { height: 72vh; min-height: 420px; padding: 12px; }
+    .title__script text { font-size: 250px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; }
+    .title__script text { stroke-dashoffset: 0; fill: var(--terra); stroke-width: 4.5; }
+  }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="#" data-nav="home" aria-label="Natalie Castro — home">
+      <img src="assets/favicon-64.png" alt="">
+      <span>Natalie Castro</span>
+    </a>
+    <nav class="nav__links" aria-label="Main">
+      <a class="nav__link" href="#" data-nav="home">Home</a>
+      <a class="nav__link" href="#projects" data-nav="projects">Projects</a>
+      <a class="nav__link" href="#about" data-nav="about">About</a>
+    </nav>
+  </div>
+</header>
+<div class="shell">
+  <main class="main">
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Welcome">
+      <!-- Background: photo at assets/hero.jpg. Falls back to the pattern below if missing. -->
+      <svg class="hero__bg-fallback" width="100%" height="100%" aria-hidden="true">
+        <defs>
+          <radialGradient id="vg" cx="50%" cy="50%" r="75%"><stop offset="0" stop-color="#1a1a1a"/><stop offset="1" stop-color="#000"/></radialGradient>
+          <g id="daisy">
+            <g fill="#9a9a9a" opacity=".55">
+              <ellipse cx="0" cy="-17" rx="5" ry="14"/><ellipse cx="0" cy="-17" rx="5" ry="14" transform="rotate(30)"/><ellipse cx="0" cy="-17" rx="5" ry="14" transform="rotate(60)"/>
+              <ellipse cx="0" cy="-17" rx="5" ry="14" transform="rotate(90)"/><ellipse cx="0" cy="-17" rx="5" ry="14" transform="rotate(120)"/><ellipse cx="0" cy="-17" rx="5" ry="14" transform="rotate(150)"/>
+              <ellipse cx="0" cy="-17" rx="5" ry="14" transform="rotate(180)"/><ellipse cx="0" cy="-17" rx="5" ry="14" transform="rotate(210)"/><ellipse cx="0" cy="-17" rx="5" ry="14" transform="rotate(240)"/>
+              <ellipse cx="0" cy="-17" rx="5" ry="14" transform="rotate(270)"/><ellipse cx="0" cy="-17" rx="5" ry="14" transform="rotate(300)"/><ellipse cx="0" cy="-17" rx="5" ry="14" transform="rotate(330)"/>
+            </g>
+            <circle r="8" fill="#222"/>
+          </g>
+          <pattern id="flowers" width="170" height="150" patternUnits="userSpaceOnUse">
+            <use href="#daisy" x="30" y="30" transform="scale(1.1)"/>
+            <use href="#daisy" x="115" y="95" transform="rotate(20 115 95)"/>
+            <use href="#daisy" x="150" y="20" transform="scale(.7)"/>
+            <use href="#daisy" x="70" y="130" transform="scale(.8)"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#vg)"/>
+        <rect width="100%" height="100%" fill="url(#flowers)" opacity=".8"/>
+      </svg>
+      <img class="hero__bg" src="assets/hero.jpg" alt="" onerror="this.remove()">
+
+      <div class="hero__dots" aria-hidden="true"><i></i><i></i><i></i></div>
+
+      <div class="title">
+        <svg class="title__script" viewBox="0 0 900 260" role="img" aria-label="Welcome to my">
+          <text x="450" y="205" text-anchor="middle">Welcome to my</text>
+        </svg>
+        <h1 class="title__big" aria-label="Portfolio" id="bigTitle">PORTFOLIO</h1>
+        <div class="badge">NATALIE CASTRO</div>
+      </div>
+
+      <a class="hero__scroll" href="#work">View projects ↓</a>
+    </section>
+
+    <!-- PROYECTOS -->
+    <section id="work" aria-labelledby="workTitle">
+      <div class="section-head">
+        <h2 id="workTitle">Selected Work</h2>
+        <p>Click a project to open it →</p>
+      </div>
+      <div class="grid" id="grid" style="margin-top:14px"></div>
+    </section>
+    <!-- ABOUT PAGE -->
+    <section class="about" id="about" hidden aria-labelledby="aboutTitle">
+      <a class="about__photo" href="https://www.linkedin.com/in/natalie-castro-barona/" target="_blank" rel="noopener" aria-label="Natalie Castro on LinkedIn">
+        <img src="assets/natalie.jpg" alt="Portrait of Natalie Castro">
+      </a>
+      <div>
+        <div class="about__label">About me</div>
+        <h1 id="aboutTitle">Natalie<br>Castro</h1>
+        <div class="about__tag">Design with intention</div>
+        <p>I design and build websites and web apps: nonprofit sites, a roommate app, a wedding website and internal tools that help teams work better.</p>
+        <p>This portfolio is a living archive. Each project shows what it is, the design technique behind it and the tools I used to make it.</p>
+        <div class="about__cols">
+          <div><h3>Web design</h3><p>Sites with a clear story, built to be easy to use.</p></div>
+          <div><h3>Product &amp; UX</h3><p>Flows and interfaces designed around real people.</p></div>
+          <div><h3>Internal tools</h3><p>Dashboards and workflows that save teams time.</p></div>
+        </div>
+        <div class="about__actions">
+          <a class="btn btn--solid" href="https://www.linkedin.com/in/natalie-castro-barona/" target="_blank" rel="noopener">Connect on LinkedIn ↗</a>
+          <a class="btn" href="#projects" data-nav="projects">See my projects</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEWER -->
+    <section class="viewer" id="viewer" hidden aria-label="Project viewer">
+      <div class="viewer__bar">
+        <button class="btn" id="back" type="button">← Back to work</button>
+        <div class="viewer__title" id="vTitle"></div>
+        <div class="viewer__tools">
+          <span id="shotTabs" class="viewer__tabs"></span>
+          <button class="btn" type="button" data-mode="desktop" aria-pressed="true">Desktop</button>
+          <button class="btn" type="button" data-mode="mobile" aria-pressed="false">Mobile</button>
+          <a class="btn" id="openTab" href="#" target="_blank" rel="noopener">Open in new tab ↗</a>
+        </div>
+      </div>
+      <div class="viewer__stage">
+        <div class="frame" id="frame" data-mode="desktop">
+          <div class="frame__bar"><i></i><i></i><i></i><div class="frame__url" id="vUrl"></div></div>
+          <div class="frame__body" id="vBody"></div>
+        </div>
+      </div>
+      <p class="viewer__hint">If the page looks blank, that site doesn't allow being embedded. Use "Open in new tab" or add a screenshot instead.</p>
+    </section>
+
+  </main>
+
+  <!-- PANEL FIJO -->
+  <aside class="panel" aria-live="polite" id="panel"></aside>
+</div>
+
+<script>
+/* ============================================================
+   EDIT YOUR PROJECTS HERE
+   - url:     link to the site (opened by "Visit")
+   - image:   screenshot in assets/ (optional), e.g. "assets/project1.jpg"
+   - live:    true → shows the live site inside the card (if it allows iframes)
+   ============================================================ */
+const projects = [
+  { title: "Harmony", tag: "UX Design class · Roommate app", year: "2026", url: "https://harmony-jade-kappa.vercel.app", image: "", live: true, mode: "mobile",
+    color: "#6C4BD1", colorDark: "#4326A6",
+    preview: "assets/previews/harmony.png",
+    badge: "Demo", note: "This is a demo version of the app.",
+    tone: "linear-gradient(135deg,#2a1d5c,#8b6fe0)",
+    summary: "An app for roommates, built for my User Experience Design class. It helps a shared home stay organized and fair: chores, groceries, shared payments and a calendar, all in one place.",
+    technique: ["Mobile-first design", "User experience design", "Shared-living flows"], tools: ["React", "TypeScript", "Vite", "Vercel"] },
+  { title: "HealingWings", tag: "University project · Nonprofit", year: "2026", url: "", image: "", live: true,
+    color: "#2D8CFF", colorDark: "#1858B8",
+    repo: "https://github.com/levihenstrom/WinterIntex4-5",
+    shots: [
+      { label: "Site tour",        video: "assets/healingwings/demo-1.mp4", poster: "assets/healingwings/demo-1.jpg" },
+      { label: "Impact dashboard", video: "assets/healingwings/demo-2.mp4", poster: "assets/healingwings/demo-2.jpg" }
+    ],
+    tone: "linear-gradient(135deg,#2a0f2a,#ff7ab8)",
+    summary: "A supporter and operations portal for a nonprofit that provides safe housing and services to people rebuilding their lives after crisis. Donors see their own giving and its impact, while staff manage resident care, fundraising and outreach, with private case data kept behind roles.",
+    technique: ["Privacy-first design", "Donor, Staff and Admin roles", "Impact dashboards"], tools: ["React", "TypeScript", ".NET API", "Python ML", "Azure"] },
+  { title: "Ella Rises", tag: "University project · Nonprofit", year: "2025", url: "", image: "", live: true,
+    color: "#F0509E", colorDark: "#B02A70",
+    repo: "https://github.com/maddiejones03/Intex",
+    shots: [
+      { label: "Home", src: "assets/ella/home.png" },
+      { label: "About", src: "assets/ella/about.png" },
+      { label: "Programs", src: "assets/ella/programs.png" },
+      { label: "Donate", src: "assets/ella/donate.png" }
+    ],
+    tone: "linear-gradient(135deg,#3a0d0d,#FE5D26)",
+    summary: "A full web platform for Ella Rises, a nonprofit that empowers young women through STEAM education, mentorship and cultural pride. A public site shares the mission and takes donations, and an admin side manages participants, events, registrations, donations, grants, milestones and surveys.",
+    technique: ["Nonprofit storytelling", "Admin dashboard", "Role-based access"], tools: ["Node.js", "Express", "EJS", "PostgreSQL"] },
+  { title: "DOMOsapiens", tag: "Anglepoint · ROI extraction platform", year: "2026", url: "", image: "", live: false,
+    color: "#0B2E7A", colorDark: "#051A4A",
+    repo: "https://github.com/nataliecastro1/DOMOsapiens",
+    preview: "assets/domo/dashboards.png",
+    shots: [
+      { label: "Extraction",  src: "assets/domo/extract.png" },
+      { label: "Queue",       src: "assets/domo/queue.png" },
+      { label: "Dashboards",  src: "assets/domo/dashboards.png" }
+    ],
+    tone: "linear-gradient(135deg,#1b1b1b,#8a8a8a)",
+    summary: "A platform built for Anglepoint that turns design-heavy ROAR slide decks into clean, structured ROI records. AI proposes the numbers, an expert confirms them, and every edit is saved in an audit trail. Our pipeline and flow design won the project.",
+    technique: ["Pipeline and flow design", "Human-in-the-loop AI", "Audit trail", "Dashboards"], tools: ["React", "Vite", "FastAPI", "Claude API", "Recharts"] },
+  { title: "FTC Hub", tag: "Forma Tu Cuerpo · Productivity system", year: "2026", url: "", image: "", live: false,
+    color: "#2E8B57", colorDark: "#1B5C38",
+    tone: "linear-gradient(135deg,#2b2118,#c9b9ab)",
+    shots: [
+      { label: "Hub",       src: "assets/ftc/hub.webp" },
+      { label: "Briefs",    src: "assets/ftc/briefs.webp" },
+      { label: "Dashboard", src: "assets/ftc/dashboard.webp" }
+    ],
+    summary: "An internal productivity hub I built for Forma Tu Cuerpo. Each team gets its own workspace: tasks, a brief workflow between marketing and design with statuses, deadlines and on-time alerts, and a dashboard that tracks average delivery time per designer.",
+    technique: ["Internal tool", "Workflow design", "Dashboard design"], tools: ["React", "TypeScript", "Vite", "Vercel"] },
+  { title: "Wedding Website", tag: "Personal · Website", year: "2026", url: "https://mellow-speculoos-4ba28d.netlify.app/", image: "", live: true,
+    color: "#FE5D26", colorDark: "#C23F0E",
+    preview: "assets/previews/wedding.png",
+    tone: "linear-gradient(135deg,#3a2a1a,#d9c3a5)",
+    summary: "The website I designed for my own wedding.",
+    technique: [], tools: [] },
+];
+
+const about = {
+  label: "About the author",
+  linkedin: "https://www.linkedin.com/in/natalie-castro-barona/",
+  title: "Natalie Castro",
+  script: "design with intention",
+  body: "Designer and web creator. This is a living archive of the sites I've designed. Each tile is a project: click it to see the idea, the design technique and the tools behind it.",
+  foot: "Select a project ←"
+};
+
+const grid = document.getElementById("grid");
+const panel = document.getElementById("panel");
+let selected = -1;
+
+/* Title: letter by letter */
+const big = document.getElementById("bigTitle");
+big.innerHTML = [..."PORTFOLIO"].map((c,i)=>`<span style="--i:${i}" aria-hidden="true">${c}</span>`).join("");
+
+/* Cards */
+projects.forEach((p, i) => {
+  const b = document.createElement("button");
+  b.className = "card"; b.style.setProperty("--i", i); b.style.setProperty("--c", p.color || "#0b0b0b"); b.style.setProperty("--cd", p.colorDark || "#0b0b0b"); b.setAttribute("aria-pressed", "false");
+  const first = p.shots && p.shots[0];
+  const preview = p.preview || p.image || (first && (first.src || first.poster));
+  const media = preview
+    ? `<img src="${preview}" alt="" loading="lazy" style="${p.previewFit ? `object-fit:${p.previewFit};` : ""}${p.previewBg ? `background:${p.previewBg};` : ""}">`
+    : `<div class="thumb__ph" style="--grad:${p.tone}">${String(i+1).padStart(2,"0")}</div>`;
+  b.innerHTML = `
+    <div class="thumb"><div class="thumb__bar"><i></i><i></i><i></i></div>${media}${p.badge ? `<span class="thumb__badge">${p.badge}</span>` : ""}</div>
+    <div class="card__meta">
+      <div><div class="card__title">${p.title}</div><div class="card__tag">${p.tag}</div></div>
+      <span class="card__arrow" aria-hidden="true">→</span>
+    </div>`;
+  b.addEventListener("click", () => openViewer(i));
+  grid.appendChild(b);
+});
+const soon = document.createElement("div");
+soon.className = "card card--soon"; soon.style.setProperty("--i", projects.length);
+soon.innerHTML = "<span>+ Coming soon</span>";
+grid.appendChild(soon);
+
+function chips(a){ return `<div class="chips">${a.map(x=>`<span>${x}</span>`).join("")}</div>`; }
+
+function render() {
+  if (selected < 0) {
+    panel.dataset.state = "about";
+    panel.innerHTML = `<div class="panel__body author">
+      <div class="panel__label">${about.label}</div>
+      <a class="author__photo" href="${about.linkedin}" target="_blank" rel="noopener" aria-label="Natalie Castro on LinkedIn">
+        <img src="assets/natalie.jpg" alt="Portrait of Natalie Castro">
+      </a>
+      <div><h2 class="panel__title">${about.title}</h2><div class="panel__script">${about.script}</div></div>
+      <hr class="rule">
+      <p>${about.body}</p>
+      <a class="author__link" href="${about.linkedin}" target="_blank" rel="noopener">Connect on LinkedIn ↗</a>
+    </div>
+    <div class="panel__foot">${about.foot}</div>`;
+    return;
+  }
+  const p = projects[selected];
+  const media = p.live && p.url ? `<iframe src="${p.url}" title="${p.title}" loading="lazy"></iframe>`
+    : p.image ? `<img src="${p.image}" alt="Preview of ${p.title}">`
+    : `<div class="thumb__ph" style="--grad:${p.tone}">${String(selected+1).padStart(2,"0")}</div>`;
+  panel.dataset.state = "project";
+  panel.innerHTML = `<div class="panel__body">
+      <div class="mini">
+        <a class="author__photo" href="${about.linkedin}" target="_blank" rel="noopener" aria-label="Natalie Castro on LinkedIn">
+          <img src="assets/natalie.jpg" alt="Portrait of Natalie Castro">
+        </a>
+        <div class="mini__text">
+          <div class="mini__name">Natalie Castro</div>
+          <div class="panel__script">${about.script}</div>
+          <a class="author__link" href="${about.linkedin}" target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
+      </div>
+      <hr class="rule">
+      <div class="panel__label">Project ${String(selected+1).padStart(2,"0")} · ${p.year}${p.badge ? ` · ${p.badge}` : ""}</div>
+      <h2 class="panel__title">${p.title}</h2>
+      <div class="panel__preview">${media}</div>
+      <p>${p.summary}</p>
+      <dl>
+        ${p.technique.length ? `<div><dt>Design technique</dt><dd>${chips(p.technique)}</dd></div>` : ""}
+        ${p.tools.length ? `<div><dt>Tools</dt><dd>${chips(p.tools)}</dd></div>` : ""}
+        ${p.repo ? `<div><dt>Code</dt><dd><a class="repo" href="${p.repo}" target="_blank" rel="noopener">View on GitHub ↗</a></dd></div>` : ""}
+      </dl>
+    </div>
+    <a class="visit" href="${p.url || '#'}" target="_blank" rel="noopener" ${p.url ? "" : 'aria-disabled="true"'}>
+      <span>Visit site</span><span>↗</span></a>`;
+}
+
+function select(i) {
+  selected = i;
+  [...grid.querySelectorAll(".card:not(.card--soon)")].forEach((c, k) => c.setAttribute("aria-pressed", k === i));
+  render();
+}
+
+/* ---------- Viewer ---------- */
+const $ = id => document.getElementById(id);
+const viewer = $("viewer"), vBody = $("vBody"), frame = $("frame");
+const homeParts = () => [document.querySelector(".hero"), $("work")];
+
+function setMode(mode) {
+  frame.dataset.mode = mode;
+  viewer.querySelectorAll("[data-mode]").forEach(b => b.setAttribute("aria-pressed", b.dataset.mode === mode));
+}
+viewer.querySelectorAll("button[data-mode]").forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
+
+function openViewer(i, pushHash = true) {
+  const p = projects[i];
+  select(i);
+  $("vTitle").textContent = p.title;
+  $("vUrl").textContent = p.url ? p.url.replace(/^https?:\/\//, "") : "add-your-link-here.com";
+  const open = $("openTab");
+  if (p.url) { open.href = p.url; open.hidden = false; } else { open.hidden = true; }
+  const tabs = $("shotTabs"); tabs.innerHTML = "";
+  vBody.classList.remove("is-shots");
+  if (p.shots && p.shots.length) {
+    const show = k => {
+      const sh = p.shots[k];
+      vBody.classList.toggle("is-shots", !sh.video);
+      vBody.innerHTML = sh.video
+        ? `<video src="${sh.video}" poster="${sh.poster || ""}" autoplay muted loop playsinline controls></video>`
+        : `<img src="${sh.src}" alt="${p.title} — ${sh.label}">`;
+      vBody.scrollTop = 0;
+      tabs.querySelectorAll("button").forEach((b, n) => b.setAttribute("aria-pressed", n === k));
+      $("vUrl").textContent = p.title.toLowerCase().replace(/\s+/g, "-") + " / " + p.shots[k].label.toLowerCase();
+    };
+    p.shots.forEach((sh, k) => {
+      const b = document.createElement("button");
+      b.className = "btn"; b.type = "button"; b.textContent = sh.label;
+      b.addEventListener("click", () => show(k));
+      tabs.appendChild(b);
+    });
+    show(0);
+  } else if (p.live && p.url) {
+    vBody.innerHTML = `<iframe src="${p.url}" title="${p.title}" loading="lazy" referrerpolicy="no-referrer"></iframe>`;
+  } else if (p.image) {
+    vBody.innerHTML = `<img src="${p.image}" alt="Screenshot of ${p.title}">`;
+  } else {
+    vBody.innerHTML = `<div class="frame__empty" style="--grad:${p.tone}"><strong>${p.title}</strong><span>${p.live ? "Live preview goes here. Add this project's link in the projects list." : "Add a screenshot or link for this project."}</span></div>`;
+  }
+  setMode(p.mode || "desktop");
+  homeParts().forEach(el => el.hidden = true);
+  viewer.hidden = false;
+  aboutEl && (aboutEl.hidden = true); document.body.classList.remove("is-about"); setActiveNav("projects");
+  document.body.classList.add("is-viewing");
+  const hint = document.querySelector(".viewer__hint");
+  hint.hidden = !!(p.shots && p.shots.length) && !p.note;
+  hint.textContent = p.note || 'If the page looks blank, that site doesn\'t allow being embedded. Use "Open in new tab" or add a screenshot instead.';
+  viewer.querySelectorAll("button[data-mode]").forEach(b => b.hidden = !!(p.shots && p.shots.length));
+  window.scrollTo({ top: 0 });
+  if (pushHash) history.pushState({ i }, "", "#project-" + (i + 1));
+}
+function setActiveNav(name) {
+  document.querySelectorAll("[data-nav]").forEach(a => {
+    if (a.classList.contains("nav__link")) a.toggleAttribute("aria-current", a.dataset.nav === name);
+    if (a.classList.contains("nav__link") && a.dataset.nav === name) a.setAttribute("aria-current", "page");
+  });
+}
+const aboutEl = $("about");
+function showHome(target, push = true) {
+  viewer.hidden = true; vBody.innerHTML = "";
+  aboutEl.hidden = true;
+  homeParts().forEach(el => el.hidden = false);
+  document.body.classList.remove("is-viewing", "is-about");
+  select(-1);
+  const hash = target === "projects" ? "#projects" : "";
+  if (push && location.hash !== hash) history.pushState(null, "", location.pathname + hash);
+  setActiveNav(target === "projects" ? "projects" : "home");
+  if (target === "projects") $("work").scrollIntoView({ behavior: "smooth" });
+  else window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function showAbout(push = true) {
+  viewer.hidden = true; vBody.innerHTML = "";
+  homeParts().forEach(el => el.hidden = true);
+  document.body.classList.remove("is-viewing");
+  document.body.classList.add("is-about");
+  aboutEl.hidden = false;
+  select(-1);
+  if (push && location.hash !== "#about") history.pushState(null, "", "#about");
+  setActiveNav("about");
+  window.scrollTo({ top: 0 });
+}
+function closeViewer(pushHash = true) { showHome("projects", pushHash); }
+document.querySelectorAll("[data-nav]").forEach(a => a.addEventListener("click", e => {
+  e.preventDefault();
+  const t = a.dataset.nav;
+  t === "about" ? showAbout() : showHome(t);
+}));
+$("back").addEventListener("click", () => closeViewer());
+document.addEventListener("keydown", e => {
+  if (e.key !== "Escape") return;
+  viewer.hidden ? select(-1) : closeViewer();
+});
+function routeFromHash() {
+  const h = location.hash;
+  const m = h.match(/^#project-(\d+)$/);
+  if (m && projects[m[1] - 1]) { aboutEl.hidden = true; document.body.classList.remove("is-about"); openViewer(m[1] - 1, false); setActiveNav("projects"); }
+  else if (h === "#about") showAbout(false);
+  else if (h === "#projects") showHome("projects", false);
+  else showHome("home", false);
+}
+window.addEventListener("popstate", routeFromHash);
+render();
+routeFromHash();
+</script>
+</body>
+</html>
